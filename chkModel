@@ -1,0 +1,21 @@
+import numpy as np
+import matplotlib.pyplot as plt
+d = []
+
+x = np.load("trained_model.npy")
+d.append(x.item())
+
+for i in range(1,12):
+    x = np.load("trained_model"+str(i)+".npy")
+    d.append(x.item())
+
+x = np.load("trained_model11.npy")
+x=(x.item())
+
+d=x["costs"]
+
+plt.plot((d))
+plt.ylabel('cost')
+plt.xlabel('iterations (per tens) ')
+plt.title("Learning rate = " + str(d['learning_rate']))
+plt.show()

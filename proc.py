@@ -21,10 +21,10 @@ def getImg(path,img):
      return img
 
 def pp(path,img):
-        img = cv2.resize(img,(IMG_SIZE,IMG_SIZE),cv2.INTER_AREA) 
+        img = cv2.resize(img,(IMG_SIZE*2,IMG_SIZE),cv2.INTER_AREA)
         return img
 
-def create_data_set():    
+def create_data_set(TRAIN_DIR_f,TRAIN_DIR_g):
     data_set = []
     for img in tqdm.tqdm(os.listdir(TRAIN_DIR_f)):
         path = os.path.join(TRAIN_DIR_f,img)
@@ -47,20 +47,20 @@ def split_data_set(data,m):
     x,y = [data[i][0] for i in range(m)],[data[i][1] for i in range(m)]
     return x,y
 
-def get_train_test_data(x,y,m):
+def get_train_eval_data(x,y,m):
     size_train = int(0.8*m)
-    size_test = m - size_train
-    train_x,test_x,train_y,test_y = np.array([x[i] for i in range(0,size_train)]),np.array([x[i] for i in range(size_train,m)]),np.array([y[i] for i in range(0,size_train)]),np.array([y[i] for i in range(size_train,m)])  
-    return train_x,test_x,train_y,test_y
+    size_eval = m - size_train
+    train_x,eval_x,train_y,eval_y = np.array([x[i] for i in range(0,size_train)]),np.array([x[i] for i in range(size_train,m)]),np.array([y[i] for i in range(0,size_train)]),np.array([y[i] for i in range(size_train,m)])  
+    return train_x,eval_x,train_y,eval_y
 
 TRAIN_DIR_f = '/media/ankur98/0F5E1B3E0F5E1B3E/Projects/Signature Authenticator/Single layer/TrainingSet/Offline Forgeries'
 TRAIN_DIR_g = '/media/ankur98/0F5E1B3E0F5E1B3E/Projects/Signature Authenticator/Single layer/TrainingSet/Offline Genuine'
 IMG_SIZE = 100
-data_set = create_data_set()
+data_set = create_data_set(TRAIN_DIR_f,TRAIN_DIR_g)
 m = len(data_set)
 data_set_x,data_set_y = split_data_set(data_set,m)
 
-train_x_org,test_x_org,train_y,test_y = get_train_test_data(data_set_x,data_set_y,m)
-np.save('data_set.npy',[train_x_org,test_x_org,train_y,test_y])
+train_x_org,eval_x_org,train_y,eval_y = get_train_eval_data(data_set_x,data_set_y,m)
+np.save('data_set.npy',[train_x_org,eval_x_org,train_y,eval_y])
 
-test_view_img('data_set.npy')
+# eval_view_img('data_set.npy')

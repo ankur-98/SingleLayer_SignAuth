@@ -26,5 +26,5 @@ def predict(w, b, X):
         
         #convert probabilities to predictions
         Y_prediction = np.round(A)
-    
+
     return Y_prediction

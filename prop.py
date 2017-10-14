@@ -21,7 +21,7 @@ def propagate(w, b, X, Y):
 
     # FORWARD PROPAGATION
     A = (sigmoid(np.add(np.dot(X.T,w),b)))         # compute activation
-    cost = J(Y,A,m)     # compute cost
+    cost = J(Y,A,m,w)     # compute cost
     
     # BACKWARD PROPAGATION 
     dz = np.add(A,-Y)

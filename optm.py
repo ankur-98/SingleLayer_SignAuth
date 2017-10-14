@@ -1,6 +1,8 @@
 #import modules
 from prop import *
 
+import tqdm
+
 #fuction to optimize parameters
 def optimize(w, b, X, Y, num_iterations, learning_rate, print_cost = False):
     
@@ -17,7 +19,7 @@ def optimize(w, b, X, Y, num_iterations, learning_rate, print_cost = False):
     #list of all the costs computed during the optimization
     costs = []                                   
     
-    for i in range(num_iterations):
+    for i in tqdm.tqdm(range(num_iterations)):
         
         # Cost and gradient calculation
         grads, cost = propagate(w, b, X, Y)     
@@ -31,7 +33,7 @@ def optimize(w, b, X, Y, num_iterations, learning_rate, print_cost = False):
         b = b - learning_rate*db
         
         # Record the costs
-        if i % 100 == 0:
+        if i % 5 == 0:
             costs.append(cost)
         
         # Print the cost every 100 training examples
